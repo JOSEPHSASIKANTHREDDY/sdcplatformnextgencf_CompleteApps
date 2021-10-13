@@ -1,0 +1,2 @@
+ID;user_id;email_id;subject;mobile_number;social_channel;from_date;end_date;status
+3d2389d7-0ea6-4bd0-a6bb-fb0783995623;1234;test@sap.com;test;1234567890;SMS;2021-02-25T08:43:02.007Z;2021-02-28T08:43:02.007Z;1

@@ -1,0 +1,63 @@
+_schema-version: "3.2"
+ID: TwitterSentimentAnalysis
+version: 0.0.1
+modules:
+- name: twittersentimentanalysis-approuter
+  type: approuter.nodejs
+  path: twittersentimentanalysis-approuter
+  requires:
+  - name: TwitterSentimentAnalysis_html_repo_runtime
+  - name: AuthenticatingApp_api
+    group: destinations
+    properties:
+        name: AuthenticatingApp_api
+        url: '~{url}'
+        forwardAuthToken: true
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: TwitterSentimentAnalysis_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: TwitterSentimentAnalysis_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - UIAPP-content.zip
+      name: UIAPP
+      target-path: resources/
+- name: UIAPP
+  type: html5
+  path: UIAPP
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: AuthenticatingApp
+  type: nodejs
+  path: AuthenticatingApp
+  provides:
+    - name: AuthenticatingApp_api
+      properties:
+        url: '${default-url}'     
+resources:
+- name: TwitterSentimentAnalysis_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: TwitterSentimentAnalysis_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

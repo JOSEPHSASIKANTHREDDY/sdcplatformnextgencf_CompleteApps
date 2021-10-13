@@ -1,0 +1,44 @@
+{
+  "name": "bookshop_new",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^4",
+    "express": "^4",
+    "@sap/hana-client": "*"
+  },
+  "devDependencies": {
+    "@sap/hdi-deploy": "*",
+    "sqlite3": "^5",
+    "@sap/ui5-builder-webide-extension": "1.0.x",
+    "@ui5/cli": "2.2.6",
+    "eslint": "5.16.x",
+    "@sap/eslint-plugin-ui5-jsdocs": "2.0.x",
+    "@sapui5/ts-types": "1.71.x",
+    "bestzip": "2.1.4",
+    "rimraf": "3.0.2",
+    "@sap/approuter": "9.0.x",
+    "@sap/html5-repo-mock": "2.0.x"
+  },
+  "scripts": {
+    "start": "npx cds run"
+  },
+  "cds": {
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "requires": {
+      "db": {
+        "kind": "hana"
+      }
+    }
+  },
+  "ui5": {
+    "dependencies": [
+      "@sap/ui5-builder-webide-extension"
+    ]
+  }
+}

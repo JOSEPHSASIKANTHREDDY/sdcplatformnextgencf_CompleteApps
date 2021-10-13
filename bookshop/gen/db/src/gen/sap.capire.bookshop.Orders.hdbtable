@@ -1,0 +1,11 @@
+COLUMN TABLE sap_capire_bookshop_Orders (
+  createdAt TIMESTAMP,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP,
+  modifiedBy NVARCHAR(255),
+  ID NVARCHAR(36) NOT NULL,
+  OrderNo NVARCHAR(5000),
+  PRIMARY KEY(ID)
+) WITH ASSOCIATIONS (
+  MANY TO MANY JOIN sap_capire_bookshop_OrderItems AS Items ON (Items.parent_ID = ID)
+)

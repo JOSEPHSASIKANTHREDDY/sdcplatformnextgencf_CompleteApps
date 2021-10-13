@@ -1,0 +1,32 @@
+{
+	"project": "slack-so-update",
+	"version": "0.0.1",
+
+	"runtime": "nodejs10",
+	"library": "./lib",
+
+	"services": {},
+
+	"secrets": {},
+
+	"configs": {},
+
+	"functions": {
+		"slack-so": {
+			"module": "index.js",
+			"handler": "handler",
+			"timeout": 180,
+			"services": [],
+			"secrets": [],
+            "configs": [],
+            "httpApi": true
+		}
+	},
+	
+	"triggers": {
+		"slack-so-trigger": {
+			"type": "HTTP",
+			"function": "slack-so"
+		}
+	}
+}

@@ -1,0 +1,6 @@
+VIEW AdminService_Books_texts AS SELECT
+  Books_texts_0.locale,
+  Books_texts_0.ID,
+  Books_texts_0.title,
+  Books_texts_0.descr
+FROM sap_capire_bookshop_Books_texts AS Books_texts_0

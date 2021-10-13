@@ -1,0 +1,11 @@
+{
+    "authenticationMethod": "none",
+    "welcomeFile":"nsUIAPP",
+    "routes": [
+        {
+            "source": "^/(.*)$",
+            "target": "$1",
+            "destination": "AuthenticatingApp_api"
+        }
+    ]
+}

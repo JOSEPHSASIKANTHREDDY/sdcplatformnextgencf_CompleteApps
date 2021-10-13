@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "node-uuid": ">=1.4.7",
+    "request": "2.88.2",
+    "@slack/web-api": "6.0.0"
+  },
+  "devDependencies": {
+    "@sap/faas": "^0.7.7"
+  }
+}

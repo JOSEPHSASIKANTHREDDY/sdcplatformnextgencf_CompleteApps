@@ -1,0 +1,11 @@
+VIEW AdminService_Authors AS SELECT
+  Authors_0.createdAt,
+  Authors_0.createdBy,
+  Authors_0.modifiedAt,
+  Authors_0.modifiedBy,
+  Authors_0.ID,
+  Authors_0.name
+FROM sap_capire_bookshop_Authors AS Authors_0
+WITH ASSOCIATIONS (
+  MANY TO MANY JOIN AdminService_Books AS books ON (books.author_ID = ID)
+)

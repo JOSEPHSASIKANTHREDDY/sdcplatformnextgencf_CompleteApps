@@ -1,0 +1,10 @@
+VIEW localized_sap_capire_bookshop_OrderItems AS SELECT
+  L_0.ID,
+  L_0.amount,
+  L_0.parent_ID,
+  L_0.book_ID
+FROM sap_capire_bookshop_OrderItems AS L_0
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN localized_sap_capire_bookshop_Orders AS parent ON (parent.ID = parent_ID),
+  MANY TO ONE JOIN localized_sap_capire_bookshop_Books AS book ON (book.ID = book_ID)
+)

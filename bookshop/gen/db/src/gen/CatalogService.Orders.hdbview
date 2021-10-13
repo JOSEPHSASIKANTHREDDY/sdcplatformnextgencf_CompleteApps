@@ -1,0 +1,11 @@
+VIEW CatalogService_Orders AS SELECT
+  Orders_0.createdAt,
+  Orders_0.createdBy,
+  Orders_0.modifiedAt,
+  Orders_0.modifiedBy,
+  Orders_0.ID,
+  Orders_0.OrderNo
+FROM sap_capire_bookshop_Orders AS Orders_0
+WITH ASSOCIATIONS (
+  MANY TO MANY JOIN CatalogService_OrderItems AS Items ON (Items.parent_ID = ID)
+)

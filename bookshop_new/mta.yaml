@@ -1,0 +1,119 @@
+_schema-version: "3.1"
+ID: bookshop_new
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: bookshop_new-srv
+  type: nodejs
+  path: gen/srv
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+- name: bookshop_new-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: bookshop_new-destination-service
+    parameters:
+      content-target: true
+  - name: bookshop_new_html_repo_host
+    parameters:
+      service-key:
+        name: bookshop_new_html_repo_host-key
+  - name: uaa_bookshop_new
+    parameters:
+      service-key:
+        name: uaa_bookshop_new-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: captest_bookshop_new_html_repo_host
+          ServiceInstanceName: bookshop_new-html5-app-host-service
+          ServiceKeyName: bookshop_new_html_repo_host-key
+          sap.cloud.service: captest
+        - Authentication: OAuth2UserTokenExchange
+          Name: captest_uaa_bookshop_new
+          ServiceInstanceName: bookshop_new-xsuaa-service
+          ServiceKeyName: uaa_bookshop_new-key
+          sap.cloud.service: captest
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: bookshop_new_ui_deployer
+  type: com.sap.application.content
+  path: app
+  requires:
+  - name: bookshop_new_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - CAPUI_NEW-content.zip
+      name: CAPUI_NEW
+      target-path: resources/
+    - artifacts:
+      - Worklist-content.zip
+      name: Worklist
+      target-path: resources/
+- name: CAPUI_NEW
+  type: html5
+  path: app/CAPUI_NEW
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+- name: Worklist
+  type: html5
+  path: app/Worklist
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: bookshop_new-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            HTML5.ForwardAuthToken: true
+            Name: bookshop_new-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: ignore
+      version: 1.0.0
+    service: destination
+    service-name: bookshop_new-destination-service
+    service-plan: lite
+  requires:
+  - name: srv-api
+- name: bookshop_new_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: bookshop_new-html5-app-host-service
+    service-plan: app-host
+- name: uaa_bookshop_new
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: bookshop_new-xsuaa-service
+    service-plan: application
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production

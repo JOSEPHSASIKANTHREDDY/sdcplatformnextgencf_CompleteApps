@@ -1,0 +1,22 @@
+{
+    "name": "authenticatingapp",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "4.17.1",
+        "body-parser": "1.19.0",
+        "passport": "0.4.1",
+        "path": "^0.12.7",
+        "serve-favicon": "^2.5.0",
+        "morgan": "^1.10.0",
+        "cookie-parser": "^1.4.5",
+        "passport-twitter": "^1.0.4",
+        "express-session": "^1.17.1"
+    }
+}

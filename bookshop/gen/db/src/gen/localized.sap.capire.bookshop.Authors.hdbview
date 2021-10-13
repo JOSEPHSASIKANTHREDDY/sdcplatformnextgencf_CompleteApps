@@ -1,0 +1,11 @@
+VIEW localized_sap_capire_bookshop_Authors AS SELECT
+  L_0.createdAt,
+  L_0.createdBy,
+  L_0.modifiedAt,
+  L_0.modifiedBy,
+  L_0.ID,
+  L_0.name
+FROM sap_capire_bookshop_Authors AS L_0
+WITH ASSOCIATIONS (
+  MANY TO MANY JOIN localized_sap_capire_bookshop_Books AS books ON (books.author_ID = ID)
+)

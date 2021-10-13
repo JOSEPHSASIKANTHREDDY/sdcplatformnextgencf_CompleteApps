@@ -1,0 +1,7 @@
+### Get request example
+GET http://localhost:8080/slack-so
+### Post request example
+POST http://localhost:8080/slack-so
+Content-Type: application/json
+
+<request-body>
